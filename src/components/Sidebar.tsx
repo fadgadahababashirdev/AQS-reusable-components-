@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 import { 
   Home, 
   Users, 
@@ -104,8 +104,8 @@ const handlePageName = (page:string)=>{
               key={index}
               icon={item.icon}
               label={item.label}
-              path={item.path}
-              badge={item.badge} 
+            //   path={item.path}
+            //   badge={item.badge} 
               name={item.name}
               isExpanded={isExpanded} 
               handleClick={()=>handlePageName(item.name)}

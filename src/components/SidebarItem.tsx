@@ -1,7 +1,14 @@
-import { useState } from "react";
-import { activePageStore } from "../store/activePageStore";
 
-const SidebarItem = ({ icon: Icon, label, path, badge, isExpanded , handleClick , name }) => {
+import { activePageStore } from "../store/activePageStore";
+interface SideBar {
+    icon:any , 
+    label:any , 
+    isExpanded:any , 
+    handleClick:()=>void ,  
+    name:string
+
+}
+const SidebarItem = ({ icon: Icon, label,  isExpanded , handleClick , name } :SideBar) => {
  const {activePage} = activePageStore() 
  const isActive = activePage === name
    
