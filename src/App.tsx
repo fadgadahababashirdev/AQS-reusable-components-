@@ -7,7 +7,7 @@ import DashboardHeader from "./components/DashboardHeader";
 function App() {
   const activePage = activePageStore((state) => state.activePage);
  
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Sidebar */}
