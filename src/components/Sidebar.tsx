@@ -54,7 +54,7 @@ const handlePageName = (page:string)=>{
       {/* Sidebar */}
     <aside
   className={`
-    fixed left-0 top-0 z-50 h-screen bg-white  border-gray-200
+    fixed left-0 top-0 z-50 h-screen bg-white  border-r border-gray-200
     transition-all duration-300 ease-in-out
     flex flex-col
     ${isExpanded ? 'w-64' : 'w-20'}
@@ -98,7 +98,7 @@ const handlePageName = (page:string)=>{
         </button>
 
         {/* Menu Items */}
-        <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+        <nav className="flex-1  overflow-y-auto p-4 space-y-1">
           {menuItems.map((item, index) => (
             <SidebarItem
               key={index}
