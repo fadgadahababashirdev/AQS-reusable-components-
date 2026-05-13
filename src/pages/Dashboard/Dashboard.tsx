@@ -7,6 +7,8 @@ import Patient from "../patients/Patient";
 import { TypographyH1 } from "../../../@/components/ui/typography";
 import { StatsCard } from "../../../@/components/ui/statsCard";
 import { Users, Briefcase, ShoppingCart } from "lucide-react";
+import { ChartBarMultiple } from "../../components/charts/MultipleCharts";
+
 // stats card hard coded data 
 const cardsData = [
   {
@@ -72,7 +74,14 @@ export default function Dashboard() {
           {activePage === "dashboard" ? (
             <div>
               <TypographyH1>Dashboard</TypographyH1>
-              <StatsCard cardsData={cardsData}/>
+              <StatsCard cardsData={cardsData}/> 
+             <div className="grid grid-cols-1 md:grid-cols-3">
+               <ChartBarMultiple/>
+              <ChartBarMultiple/>
+              <ChartBarMultiple/>
+             </div>
+               
+              
             </div>
           ) : activePage === "appoitments" ? (
             <Appointment />
