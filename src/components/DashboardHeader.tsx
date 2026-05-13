@@ -68,7 +68,7 @@ export default function DashboardHeader({
   }, []);
 
   return (
-    <header className="w-full bg-white  shadow-sm rounded-md px-4 sm:px-6 h-16 md:h-18 flex items-center justify-between">
+    <header className="w-full     px-4 shadow-2xs sm:px-6 h-16 md:h-18 flex items-center justify-between">
       {/* Left — greeting */}
       <div className="flex flex-col">
         <span className="text-sm sm:text-base font-semibold text-gray-900 leading-tight">

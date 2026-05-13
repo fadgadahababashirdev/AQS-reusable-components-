@@ -1,8 +1,9 @@
+import { TypographyH1 } from "../../../@/components/ui/typography"
 
 
 const Patient = () => {
   return (
-    <div><h1>Patient</h1></div>
+    <div><TypographyH1>Patients</TypographyH1></div>
   )
 }
 

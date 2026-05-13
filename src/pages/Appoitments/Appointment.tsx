@@ -1,8 +1,11 @@
-
-
+import {TypographyH1} from "../../../@/components/ui/typography"
 const Appointment = () => {
   return (
-    <div>Appointment</div>
+    <div>
+       <TypographyH1>
+        Appoitment
+       </TypographyH1>
+    </div>
   )
 }
 
