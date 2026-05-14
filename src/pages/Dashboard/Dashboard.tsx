@@ -6,17 +6,26 @@ import Appointment from "../Appoitments/Appointment";
 import Patient from "../patients/Patient";
 import { TypographyH1 } from "../../../@/components/ui/typography";
 import { StatsCard } from "../../../@/components/ui/statsCard";
-import { Users, Briefcase, ShoppingCart } from "lucide-react";
-import { ChartBarMultiple } from "../../components/charts/MultipleCharts";
+import { ChartPieDonutTextt } from "../../charts/PieCharts";
+import { ChartBarLabelCustom } from "../../charts/ChartBarLabelCustom"; 
+import {ChartBarHorizontal} from "../../charts/ChartBarHorizantal"
+ import MappingChartsGrid from "../../charts/ChartPieDonutText";
+
+
+
+
 
 // stats card hard coded data 
 const cardsData = [
+ 
   {
    
     leaderNumber: 2817,
     leaderHeading: "Total Users",
     followerNumber: 32,
-    icon: <Users/>, 
+   
+    
+   
     
   },
   {
@@ -24,21 +33,21 @@ const cardsData = [
     leaderNumber: 1450,
     leaderHeading: "Active Clients",
     followerNumber: 18,
-    icon: <Briefcase/>,
+  
   },
   {
     
     leaderNumber: 982,
     leaderHeading: "Completed Orders",
     followerNumber: 12,
-    icon: <ShoppingCart/>,
+   
   },
    {
    
     leaderNumber: 2817,
     leaderHeading: "Total Users",
     followerNumber: 32,
-    icon: <Users/>, 
+  
     
   },
    {
@@ -46,7 +55,7 @@ const cardsData = [
     leaderNumber: 2817,
     leaderHeading: "Total Users",
     followerNumber: 32,
-    icon: <Users/>, 
+  
     
   },
 ];
@@ -75,12 +84,20 @@ export default function Dashboard() {
             <div>
               <TypographyH1>Dashboard</TypographyH1>
               <StatsCard cardsData={cardsData}/> 
-             <div className="grid grid-cols-1 md:grid-cols-3">
-               <ChartBarMultiple/>
-              <ChartBarMultiple/>
-              <ChartBarMultiple/>
-             </div>
+              <div className="grid mx-4 mt-6  gap-3 grid-cols-1 md:grid-cols-3">
+               {/* this is the charts section  */}
                
+              
+                  <ChartPieDonutTextt/> 
+                <ChartBarLabelCustom/> 
+                <ChartBarHorizontal/>
+                 
+              
+               
+               
+              </div>
+              {/* four charts */} 
+               <MappingChartsGrid/>
               
             </div>
           ) : activePage === "appoitments" ? (
