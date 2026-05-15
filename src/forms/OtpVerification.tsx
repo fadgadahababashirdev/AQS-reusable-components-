@@ -3,9 +3,13 @@
 import { useRef, useState } from "react"
 import { ShieldCheck } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useFormColorStore } from "../store/formColorStore"
 
 export default function OtpVerification() {
   const companyName = "AQS"
+
+  // dynamic colors
+  const color = useFormColorStore()
 
   const [otp, setOtp] = useState<string[]>([
     "",
@@ -80,38 +84,78 @@ export default function OtpVerification() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f4f7fb] flex items-center justify-center p-6">
+    <div
+      className="min-h-screen flex items-center justify-center p-6"
+      style={{
+        backgroundColor: color.formBackgroundColor,
+      }}
+    >
       <div className="w-full max-w-md">
-
         {/* Header */}
         <div className="flex flex-col items-center mb-8">
-
           {/* Logo */}
-          <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#042379] to-[#0A4DCC] flex items-center justify-center shadow-lg shadow-blue-200">
-            <ShieldCheck className="w-9 h-9 text-white" />
+          <div
+            className="w-20 h-20 rounded-3xl flex items-center justify-center shadow-lg"
+            style={{
+              background: `linear-gradient(to bottom right, ${color.gradientFrom}, ${color.gradientTo})`,
+              boxShadow: `0 10px 25px ${color.shadowColor}`,
+            }}
+          >
+            <ShieldCheck
+              className="w-9 h-9"
+              style={{
+                color: color.lockKeyHoleColor,
+              }}
+            />
           </div>
 
           {/* Title */}
-          <h1 className="text-2xl font-bold text-[#071143] mt-6">
+          <h1
+            className="text-2xl font-bold mt-6"
+            style={{
+              color: color.h1,
+            }}
+          >
             Verify OTP
           </h1>
 
           {/* Subtitle */}
-          <p className="text-gray-500 mt-3 text-center text-[17px]">
-            Enter the 6-digit code sent to your email to continue to{" "}
-            <span className="font-semibold text-[#042379]">
+          <p
+            className="mt-3 text-center text-[17px]"
+            style={{
+              color: color.formParagraphColor,
+            }}
+          >
+            Enter the 6-digit code sent to your email
+            to continue to{" "}
+            <span
+              className="font-semibold"
+              style={{
+                color: color.spanColor,
+              }}
+            >
               {companyName}
             </span>
           </p>
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+        <div
+          className="rounded-3xl shadow-xl border p-8"
+          style={{
+            backgroundColor: color.cardBackground,
+            borderColor: color.formCardBorderColor,
+          }}
+        >
           <form className="space-y-6">
-
             {/* OTP Inputs */}
             <div>
-              <label className="text-sm font-medium text-gray-600 mb-4 block text-center">
+              <label
+                className="text-sm font-medium mb-4 block text-center"
+                style={{
+                  color: color.formLabelColor,
+                }}
+              >
                 Verification Code
               </label>
 
@@ -136,18 +180,43 @@ export default function OtpVerification() {
                       handleKeyDown(e, index)
                     }
                     onPaste={handlePaste}
-                    className="w-12 h-14 rounded-xl bg-[#f5f7ff] border border-transparent focus:border-[#042379] focus:bg-white outline-none text-center text-xl font-semibold transition-all"
+                    className="w-12 h-14 rounded-xl border border-transparent outline-none text-center text-xl font-semibold transition-all"
+                    style={{
+                      backgroundColor:
+                        color.inputBackgroundColor,
+                     
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor =
+                        color.primaryColor
+                      e.target.style.backgroundColor =
+                        color.cardBackground
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor =
+                        "transparent"
+                      e.target.style.backgroundColor =
+                        color.inputBackgroundColor
+                    }}
                   />
                 ))}
               </div>
             </div>
 
             {/* Resend */}
-            <div className="text-center text-sm text-gray-500">
+            <div
+              className="text-center text-sm"
+              style={{
+                color: color.formParagraphColor,
+              }}
+            >
               Didn’t receive the code?{" "}
               <button
                 type="button"
-                className="font-medium text-[#042379] hover:underline cursor-pointer"
+                className="font-medium hover:underline cursor-pointer transition-all"
+                style={{
+                  color: color.primaryColor,
+                }}
               >
                 Resend OTP
               </button>
@@ -157,7 +226,12 @@ export default function OtpVerification() {
             <Link to="/reset-password">
               <button
                 type="submit"
-                className="w-full h-14 rounded-xl cursor-pointer bg-linear-to-r from-[#042379] to-[#0A4DCC] hover:opacity-95 transition-all text-white text-lg font-semibold shadow-lg shadow-blue-200"
+                className="w-full h-14 rounded-xl cursor-pointer hover:opacity-95 transition-all text-lg font-semibold shadow-lg"
+                style={{
+                  background: `linear-gradient(to right, ${color.gradientFrom}, ${color.gradientTo})`,
+                  color: color.lockKeyHoleColor,
+                  boxShadow: `0 10px 25px ${color.shadowColor}`,
+                }}
               >
                 Verify Code
               </button>
