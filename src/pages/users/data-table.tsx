@@ -1,9 +1,10 @@
-
 import React from "react";
-import type {ColumnDef, ColumnFiltersState} from "@tanstack/react-table"
+
+import type {
+  ColumnDef,
+} from "@tanstack/react-table";
 
 import {
-  
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -17,60 +18,80 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow, 
-  
+  TableRow,
 } from "../../../@/components/ui/table";
-import {Input} from "../../../@/components/ui/input"
+
+import { Input } from "../../../@/components/ui/input";
 
 import DataTablePagination from "../../components/Pagination";
-
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends {
+  firstName: string;
+  LastName: string;
+  email: string;
+  status: string;
+}, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+
+  // GLOBAL SEARCH STATE
+  const [globalFilter, setGlobalFilter] = React.useState("");
+
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
 
-    // IMPORTANT
-    getPaginationRowModel: getPaginationRowModel(),
-     initialState: {
-    pagination: {
-      pageSize: 2,
-    },
-  },
-
-  // filter 
-   onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
     state: {
-      
-      columnFilters,
+      globalFilter,
+    },
+
+    onGlobalFilterChange: setGlobalFilter,
+
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+
+    initialState: {
+      pagination: {
+        pageSize: 2,
+      },
+    },
+
+    // GLOBAL SEARCH
+    globalFilterFn: (row, _, filterValue) => {
+      const search = filterValue.toLowerCase();
+
+      return (
+        row.original.firstName.toLowerCase().includes(search) ||
+        row.original.LastName.toLowerCase().includes(search) ||
+        row.original.email.toLowerCase().includes(search) ||
+        row.original.status.toLowerCase().includes(search)
+      );
     },
   });
 
   return (
     <div>
-       <div className="flex items-center py-4">
+
+      {/* SEARCH */}
+      <div className="flex items-center py-4">
         <Input
-          placeholder="Search"
-          value={(table.getColumn("firstName")?.getFilterValue() as string) ?? ""}
+          placeholder="Search users..."
+          value={globalFilter}
           onChange={(event) =>
-            table.getColumn("firstName")?.setFilterValue(event.target.value)
+            setGlobalFilter(event.target.value)
           }
           className="max-w-sm"
         />
       </div>
+
+      {/* TABLE */}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -78,7 +99,7 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="">
+                    <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -95,7 +116,10 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} className="font-normal">
+                <TableRow
+                  key={row.id}
+                  className="font-normal"
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
