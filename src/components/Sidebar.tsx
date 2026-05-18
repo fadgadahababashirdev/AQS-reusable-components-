@@ -6,9 +6,10 @@ import {
   Settings,
   Bell,
   BarChart2,
-  Mail,
+  
   ChevronLeft,
-  ChevronRight,
+  ChevronRight, 
+  UserCheck 
 } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import { activePageStore } from "../store/activePageStore";
@@ -33,6 +34,13 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
       path: "/users",
       badge: "12",
       name: "users",
+    }, 
+     {
+      icon: UserCheck ,
+      label: "Profile",
+      path: "/profile",
+      badge: "8",
+      name: "profile",
     },
     {
       icon: Calendar,
@@ -55,13 +63,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
       badge: "3",
       name: "reports",
     },
-    {
-      icon: Mail,
-      label: "Messages",
-      path: "/messages",
-      badge: "8",
-      name: "messages",
-    },
+   
     {
       icon: Bell,
       label: "Notifications",

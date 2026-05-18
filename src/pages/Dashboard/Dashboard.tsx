@@ -10,6 +10,7 @@ import { ChartPieDonutTextt } from "../../charts/PieCharts";
 import { ChartBarLabelCustom } from "../../charts/ChartBarLabelCustom"; 
 import {ChartBarHorizontal} from "../../charts/ChartBarHorizantal"
  import MappingChartsGrid from "../../charts/ChartPieDonutText";
+import ProfileSettings from "../Profile/ProfilePage";
 
 
 
@@ -58,7 +59,98 @@ const cardsData = [
   
     
   },
-];
+]; 
+// sample-data/profile-data.ts
+
+export const profileData = {
+  fullName: "Alexa Rawles",
+  nickName: "Alexa",
+  email: "alexarawles@gmail.com",
+
+  gender: "female",
+  country: "rwanda",
+  language: "english",
+  timezone: "cat",
+
+  emailAddresses: [
+    {
+      email: "alexarawles@gmail.com",
+      addedAt: "1 month ago",
+    },
+    {
+      email: "alexa.work@gmail.com",
+      addedAt: "2 weeks ago",
+    },
+  ],
+
+  genders: [
+    {
+      label: "Male",
+      value: "male",
+    },
+    {
+      label: "Female",
+      value: "female",
+    },
+    {
+      label: "Other",
+      value: "other",
+    },
+  ],
+
+  countries: [
+    {
+      label: "Rwanda",
+      value: "rwanda",
+    },
+    {
+      label: "Kenya",
+      value: "kenya",
+    },
+    {
+      label: "Uganda",
+      value: "uganda",
+    },
+    {
+      label: "Tanzania",
+      value: "tanzania",
+    },
+  ],
+
+  languages: [
+    {
+      label: "English",
+      value: "english",
+    },
+    {
+      label: "French",
+      value: "french",
+    },
+    {
+      label: "Kinyarwanda",
+      value: "kinyarwanda",
+    },
+  ],
+
+  timezones: [
+    {
+      label: "CAT (Central Africa Time)",
+      value: "cat",
+    },
+    {
+      label: "GMT (Greenwich Mean Time)",
+      value: "gmt",
+    },
+    {
+      label: "EAT (East Africa Time)",
+      value: "eat",
+    },
+  ],
+
+  onEdit: () => {
+    console.log("Edit profile clicked")
+  },
+}
 export default function Dashboard() {
   const activePage = activePageStore((state) => state.activePage);
 
@@ -102,7 +194,9 @@ export default function Dashboard() {
             </div>
           ) : activePage === "appoitments" ? (
             <Appointment />
-          ) : (
+          ) :  activePage === "profile" ? (
+             <ProfileSettings {...profileData} />
+          ) :(
             <Users />
           )}
         </div>
