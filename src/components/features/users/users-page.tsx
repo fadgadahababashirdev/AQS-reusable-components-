@@ -40,7 +40,7 @@ export default function UserTable() {
   const data = getData();
 
   return (
-    <div className="container  px-4 py-10">
+    <div className="  px-4 py-10">
       <DataTable columns={columns} data={data} searchKeys={["firstName" , "LastName" , "email" , "status"]}/>
     </div>
   );

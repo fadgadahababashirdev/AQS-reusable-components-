@@ -1,8 +1,6 @@
 import React from "react";
 
-import type {
-  ColumnDef,
-} from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
 import {
   flexRender,
@@ -23,13 +21,18 @@ import {
 
 import { Input } from "../../../@/components/ui/input";
 
+import { Search } from "lucide-react";
+
 import DataTablePagination from "../../components/Pagination";
+
+import ExportExcel from "../exportingDocuments/ExportExcell";
+import ExportCSV from "../exportingDocuments/ExportCSV";
+
+import { useFormColorStore } from "../../store/formColorStore";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-
-  // DYNAMIC SEARCH FIELDS
   searchKeys: (keyof TData)[];
 }
 
@@ -38,6 +41,8 @@ export function DataTable<TData, TValue>({
   data,
   searchKeys,
 }: DataTableProps<TData, TValue>) {
+
+  const colors = useFormColorStore();
 
   // SEARCH STATE
   const [globalFilter, setGlobalFilter] =
@@ -54,19 +59,25 @@ export function DataTable<TData, TValue>({
     onGlobalFilterChange: setGlobalFilter,
 
     getCoreRowModel: getCoreRowModel(),
+
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+
+    getPaginationRowModel:
+      getPaginationRowModel(),
 
     initialState: {
       pagination: {
-        pageSize: 2,
+        pageSize: 10,
       },
     },
 
-    // FULLY REUSABLE FILTER
-    globalFilterFn: (row, _, filterValue) => {
+    // GLOBAL FILTER
+    globalFilterFn: (
+      row,
+      _,
+      filterValue
+    ) => {
       return searchKeys.some((key) => {
-
         const value = String(
           row.original[key] ?? ""
         ).toLowerCase();
@@ -79,60 +90,138 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div
+      className="rounded-lg w-full border p-6 shadow-lg"
+      style={{
+        backgroundColor:
+          colors.cardBackground,
+        borderColor:
+          colors.formCardBorderColor,
+       
+      }}
+    >
 
-      {/* SEARCH */}
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Search..."
-          value={globalFilter}
-          onChange={(event) =>
-            setGlobalFilter(event.target.value)
-          }
-          className="max-w-sm outline-none"
-        />
+      {/* TOP BAR */}
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-6">
+
+        {/* SEARCH */}
+        <div className="relative w-full max-w-md">
+
+          <Search
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4"
+            style={{
+              color: colors.inputIconsColor,
+            }}
+          />
+
+          <Input
+            placeholder="Search anything..."
+            value={globalFilter}
+            onChange={(event) =>
+              setGlobalFilter(
+                event.target.value
+              )
+            }
+        className="pl-11 h-12 rounded-2xl border border-black focus:border-black focus:ring-0 focus:outline-none"
+            style={{
+             
+              color: colors.h1,
+            }}
+          />
+        </div>
+
+        {/* EXPORT BUTTONS */}
+        <div className="flex items-center gap-3">
+
+          <ExportExcel
+            data={data}
+            buttonText="Export Excel"
+            className="rounded-xl px-5 h-11 text-white border-0"
+          />
+
+          <ExportCSV
+            data={data}
+            buttonText="Export CSV"
+            className="rounded-xl px-5 h-11 border"
+          />
+        </div>
       </div>
 
-      {/* TABLE */}
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
+      {/* TABLE CONTAINER */}
+      <div
+        className="w-full overflow-x-auto rounded-2xl border"
+        style={{
+          borderColor:
+            colors.formCardBorderColor,
+        }}
+      >
+
+        <Table className="w-full table-fixed">
+
+          {/* HEADER */}
+          <TableHeader
+            style={{
+              backgroundColor:
+                colors.inputBackgroundColor,
+            }}
+          >
             {table
               .getHeaderGroups()
               .map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
+                <TableRow
+                  key={headerGroup.id}
+                  className="hover:bg-transparent border-0"
+                >
                   {headerGroup.headers.map(
-                    (header) => {
-                      return (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column
-                                  .columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
-                      );
-                    }
+                    (header) => (
+                      <TableHead
+                        key={header.id}
+                        className="h-14 text-sm font-semibold"
+                        style={{
+                          color:
+                            colors.formLabelColor,
+                        }}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column
+                                .columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    )
                   )}
                 </TableRow>
               ))}
           </TableHeader>
 
+          {/* BODY */}
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+
+            {table.getRowModel().rows
+              ?.length ? (
+
               table
                 .getRowModel()
                 .rows.map((row) => (
+
                   <TableRow
                     key={row.id}
-                    className="font-normal"
+                    className="transition-all hover:bg-[#f8faff]"
                   >
+
                     {row
                       .getVisibleCells()
                       .map((cell) => (
-                        <TableCell key={cell.id}>
+
+                        <TableCell
+                          key={cell.id}
+                          className="py-4 text-[15px]"
+                          style={{
+                            color: colors.h1,
+                          }}
+                        >
                           {flexRender(
                             cell.column.columnDef
                               .cell,
@@ -144,11 +233,16 @@ export function DataTable<TData, TValue>({
                 ))
             ) : (
               <TableRow>
+
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-32 text-center text-base"
+                  style={{
+                    color:
+                      colors.formParagraphColor,
+                  }}
                 >
-                  No results.
+                  No results found.
                 </TableCell>
               </TableRow>
             )}
@@ -157,8 +251,10 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* PAGINATION */}
-      <div className="mt-4">
-        <DataTablePagination table={table} />
+      <div className="mt-6">
+        <DataTablePagination
+          table={table}
+        />
       </div>
     </div>
   );
