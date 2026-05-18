@@ -1,12 +1,18 @@
-"use client"
+
 
 import { useRef, useState } from "react"
-import { ShieldCheck } from "lucide-react"
+
 import { Link } from "react-router-dom"
 import { useFormColorStore } from "../store/formColorStore"
+import { useCompanyInfo } from "../store/companyInformation"
 
 export default function OtpVerification() {
-  const companyName = "AQS"
+  const companyName = useCompanyInfo(
+     (state) => state.containedInfo.companyName || "AQS",
+   );
+   const companyLogo = useCompanyInfo(
+     (state) => state.containedInfo.companyLogo || "../../favicon.svg",
+   );
 
   // dynamic colors
   const color = useFormColorStore()
@@ -95,17 +101,14 @@ export default function OtpVerification() {
         <div className="flex flex-col items-center mb-8">
           {/* Logo */}
           <div
-            className="w-20 h-20 rounded-3xl flex items-center justify-center shadow-lg"
-            style={{
-              background: `linear-gradient(to bottom right, ${color.gradientFrom}, ${color.gradientTo})`,
-              boxShadow: `0 10px 25px ${color.shadowColor}`,
-            }}
+            className="w-20 h-20 rounded-3xl flex items-center justify-center "
+            
           >
-            <ShieldCheck
-              className="w-9 h-9"
-              style={{
-                color: color.lockKeyHoleColor,
-              }}
+            <img
+              src={companyLogo}
+              alt="Logo not found"
+              className="w-9 h-9 "
+           
             />
           </div>
 

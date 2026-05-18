@@ -6,13 +6,17 @@ import {
   LockKeyhole,
   
 } from "lucide-react"
+import { useCompanyInfo } from "../store/companyInformation";
 
 
 export default function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+ 
 
-  const companyName = "AQS"
+    const companyName = useCompanyInfo((state)=>state.containedInfo.companyName || "AQS"); 
+    const companyLogo = useCompanyInfo((state)=>state.containedInfo.companyLogo || "../../favicon.svg")
+
 
   return (
     <div className="min-h-screen bg-[#f4f7fb] flex items-center justify-center p-6">
@@ -22,8 +26,13 @@ export default function ResetPassword() {
         <div className="flex flex-col items-center mb-8">
 
           {/* Logo */}
-          <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#042379] to-[#0A4DCC] flex items-center justify-center shadow-lg shadow-blue-200">
-            <LockKeyhole className="w-9 h-9 text-white" />
+          <div className="w-20 h-20 ">
+             <img
+              src={companyLogo}
+              alt="Logo not found"
+              className="w-9 h-9 "
+           
+            />
           </div>
 
           {/* Title */}
