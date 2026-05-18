@@ -41,7 +41,6 @@ export function DataTable<TData, TValue>({
   data,
   searchKeys,
 }: DataTableProps<TData, TValue>) {
-
   const colors = useFormColorStore();
 
   // SEARCH STATE
@@ -60,7 +59,8 @@ export function DataTable<TData, TValue>({
 
     getCoreRowModel: getCoreRowModel(),
 
-    getFilteredRowModel: getFilteredRowModel(),
+    getFilteredRowModel:
+      getFilteredRowModel(),
 
     getPaginationRowModel:
       getPaginationRowModel(),
@@ -91,22 +91,18 @@ export function DataTable<TData, TValue>({
 
   return (
     <div
-      className="rounded-lg w-full border p-6 shadow-lg"
+      className="rounded-lg w-full border p-3 sm:p-6 shadow-lg"
       style={{
         backgroundColor:
           colors.cardBackground,
         borderColor:
           colors.formCardBorderColor,
-       
       }}
     >
-
       {/* TOP BAR */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-6">
-
         {/* SEARCH */}
         <div className="relative w-full max-w-md">
-
           <Search
             className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4"
             style={{
@@ -122,17 +118,15 @@ export function DataTable<TData, TValue>({
                 event.target.value
               )
             }
-        className="pl-11 h-12 rounded-2xl border border-black focus:border-black focus:ring-0 focus:outline-none"
+            className="pl-11 h-12 rounded-2xl border border-black focus:border-black focus:ring-0 focus:outline-none"
             style={{
-             
               color: colors.h1,
             }}
           />
         </div>
 
         {/* EXPORT BUTTONS */}
-        <div className="flex items-center gap-3">
-
+        <div className="flex flex-wrap items-center gap-3">
           <ExportExcel
             data={data}
             buttonText="Export Excel"
@@ -155,9 +149,7 @@ export function DataTable<TData, TValue>({
             colors.formCardBorderColor,
         }}
       >
-
-        <Table className="w-full table-fixed">
-
+        <Table className="w-full min-w-max">
           {/* HEADER */}
           <TableHeader
             style={{
@@ -176,7 +168,7 @@ export function DataTable<TData, TValue>({
                     (header) => (
                       <TableHead
                         key={header.id}
-                        className="h-14 text-sm font-semibold"
+                        className="h-14 text-sm font-semibold whitespace-nowrap"
                         style={{
                           color:
                             colors.formLabelColor,
@@ -198,26 +190,21 @@ export function DataTable<TData, TValue>({
 
           {/* BODY */}
           <TableBody>
-
             {table.getRowModel().rows
               ?.length ? (
-
               table
                 .getRowModel()
                 .rows.map((row) => (
-
                   <TableRow
                     key={row.id}
                     className="transition-all hover:bg-[#f8faff]"
                   >
-
                     {row
                       .getVisibleCells()
                       .map((cell) => (
-
                         <TableCell
                           key={cell.id}
-                          className="py-4 text-sm"
+                          className="py-4 text-sm whitespace-nowrap"
                           style={{
                             color: colors.h1,
                           }}
@@ -233,7 +220,6 @@ export function DataTable<TData, TValue>({
                 ))
             ) : (
               <TableRow>
-
                 <TableCell
                   colSpan={columns.length}
                   className="h-32 text-center text-base"
