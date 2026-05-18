@@ -22,7 +22,7 @@ interface FormStoreColors {
   colors: Colors;
 }
 
-export const formColorStore = create<FormStoreColors>((set) => ({
+export const formColorStore = create<FormStoreColors>(() => ({
   colors: {
     formBackgroundColor: "#f4f7fb",
     primaryColor: "#052884",

@@ -16,7 +16,7 @@ interface SidebarColors {
     colors:Sidebar
 }
  
-export const sideBarColorStore = create<SidebarColors> ((set)=>({
+export const sideBarColorStore = create<SidebarColors> (()=>({
     colors :{
         overlayColor:"rgb(0 0 0 / 0.5)" ,
         sideBarBg:"#ffffff" ,

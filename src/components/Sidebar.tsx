@@ -29,8 +29,8 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
     },
     {
       icon: Users,
-      label: "Patients",
-      path: "/patients",
+      label: "Users",
+      path: "/users",
       badge: "12",
       name: "users",
     },
