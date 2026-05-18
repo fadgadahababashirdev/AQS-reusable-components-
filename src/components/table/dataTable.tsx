@@ -28,20 +28,20 @@ import DataTablePagination from "../../components/Pagination";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+
+  // DYNAMIC SEARCH FIELDS
+  searchKeys: (keyof TData)[];
 }
 
-export function DataTable<TData extends {
-  firstName: string;
-  LastName: string;
-  email: string;
-  status: string;
-}, TValue>({
+export function DataTable<TData, TValue>({
   columns,
   data,
+  searchKeys,
 }: DataTableProps<TData, TValue>) {
 
-  // GLOBAL SEARCH STATE
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  // SEARCH STATE
+  const [globalFilter, setGlobalFilter] =
+    React.useState("");
 
   const table = useReactTable({
     data,
@@ -63,16 +63,18 @@ export function DataTable<TData extends {
       },
     },
 
-    // GLOBAL SEARCH
+    // FULLY REUSABLE FILTER
     globalFilterFn: (row, _, filterValue) => {
-      const search = filterValue.toLowerCase();
+      return searchKeys.some((key) => {
 
-      return (
-        row.original.firstName.toLowerCase().includes(search) ||
-        row.original.LastName.toLowerCase().includes(search) ||
-        row.original.email.toLowerCase().includes(search) ||
-        row.original.status.toLowerCase().includes(search)
-      );
+        const value = String(
+          row.original[key] ?? ""
+        ).toLowerCase();
+
+        return value.includes(
+          filterValue.toLowerCase()
+        );
+      });
     },
   });
 
@@ -82,7 +84,7 @@ export function DataTable<TData extends {
       {/* SEARCH */}
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search users..."
+          placeholder="Search..."
           value={globalFilter}
           onChange={(event) =>
             setGlobalFilter(event.target.value)
@@ -95,41 +97,51 @@ export function DataTable<TData extends {
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
+            {table
+              .getHeaderGroups()
+              .map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map(
+                    (header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column
+                                  .columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      );
+                    }
+                  )}
+                </TableRow>
+              ))}
           </TableHeader>
 
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  className="font-normal"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table
+                .getRowModel()
+                .rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    className="font-normal"
+                  >
+                    {row
+                      .getVisibleCells()
+                      .map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef
+                              .cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                  </TableRow>
+                ))
             ) : (
               <TableRow>
                 <TableCell

@@ -1,7 +1,7 @@
 import type { User } from "./column";
 import { columns } from "./column";
 
-import { DataTable } from "./data-table";
+import { DataTable } from "../../table/dataTable";
 
 function getData(): User[] {
   return [
@@ -36,12 +36,12 @@ function getData(): User[] {
   ];
 }
 
-export default function DemoPage() {
+export default function UserTable() {
   const data = getData();
 
   return (
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+    <div className="container  px-4 py-10">
+      <DataTable columns={columns} data={data} searchKeys={["firstName" , "LastName" , "email" , "status"]}/>
     </div>
   );
 }

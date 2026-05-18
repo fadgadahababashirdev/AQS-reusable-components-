@@ -3,7 +3,7 @@ import Sidebar from "../../components/Sidebar";
 import { activePageStore } from "../../store/activePageStore";
 import DashboardHeader from "../../components/DashboardHeader";
 import Appointment from "../Appoitments/Appointment";
-import Patient from "../user-s/Users";
+import Users from "../users/Users";
 import { TypographyH1 } from "../../../@/components/ui/typography";
 import { StatsCard } from "../../../@/components/ui/statsCard";
 import { ChartPieDonutTextt } from "../../charts/PieCharts";
@@ -103,7 +103,7 @@ export default function Dashboard() {
           ) : activePage === "appoitments" ? (
             <Appointment />
           ) : (
-            <Patient />
+            <Users />
           )}
         </div>
       </main>
