@@ -217,7 +217,7 @@ export function DataTable<TData, TValue>({
 
                         <TableCell
                           key={cell.id}
-                          className="py-4 text-[15px]"
+                          className="py-4 text-sm"
                           style={{
                             color: colors.h1,
                           }}
