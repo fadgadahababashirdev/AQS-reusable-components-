@@ -87,7 +87,7 @@ export function DataTable<TData extends {
           onChange={(event) =>
             setGlobalFilter(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm outline-none"
         />
       </div>
 
