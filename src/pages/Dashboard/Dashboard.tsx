@@ -147,9 +147,7 @@ export const profileData = {
     },
   ],
 
-  onEdit: () => {
-    console.log("Edit profile clicked")
-  },
+ 
 }
 export default function Dashboard() {
   const activePage = activePageStore((state) => state.activePage);
