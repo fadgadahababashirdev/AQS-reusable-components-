@@ -99,7 +99,7 @@ export default function UserTable() {
   return (
     <div className="  px-4 py-10"> 
     <StatsCard cardsData={cardsData}/>
-     <div className="mt-10"> <DataTable columns={columns} data={data} searchKeys={["firstName" , "LastName" , "email" , "status"]}/></div>
+     <div className="mt-14"> <DataTable columns={columns} data={data} searchKeys={["firstName" , "LastName" , "email" , "status"]}/></div>
     </div>
   );
 }

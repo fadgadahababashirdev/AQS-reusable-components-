@@ -25,34 +25,20 @@ export default function ExportExcel<TData>({
 
   className,
 }: ExportExcelProps<TData>) {
-
   const exportToExcel = () => {
-
     if (!data?.length) return;
 
-    const worksheet =
-      XLSX.utils.json_to_sheet(data);
+    const worksheet = XLSX.utils.json_to_sheet(data);
 
-    const workbook =
-      XLSX.utils.book_new();
+    const workbook = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(
-      workbook,
-      worksheet,
-      sheetName
-    );
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
 
-    XLSX.writeFile(
-      workbook,
-      `${fileName}.xlsx`
-    );
+    XLSX.writeFile(workbook, `${fileName}.xlsx`);
   };
 
   return (
-    <Button
-      onClick={exportToExcel}
-      className={className}
-    >
+    <Button onClick={exportToExcel} className={`cursor-pointer ${className}`}>
       {buttonText}
     </Button>
   );

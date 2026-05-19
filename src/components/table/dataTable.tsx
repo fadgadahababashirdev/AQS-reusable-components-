@@ -189,50 +189,121 @@ export function DataTable<TData, TValue>({
           </TableHeader>
 
           {/* BODY */}
-          <TableBody>
-            {table.getRowModel().rows
-              ?.length ? (
-              table
-                .getRowModel()
-                .rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    className="transition-all hover:bg-[#f8faff]"
-                  >
-                    {row
-                      .getVisibleCells()
-                      .map((cell) => (
-                        <TableCell
-                          key={cell.id}
-                          className="py-4 text-sm whitespace-nowrap"
-                          style={{
-                            color: colors.h1,
-                          }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef
-                              .cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                  </TableRow>
-                ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-32 text-center text-base"
+         <TableBody>
+  {table.getRowModel().rows?.length ? (
+    table.getRowModel().rows.map((row) => (
+      <TableRow
+        key={row.id}
+        className="transition-all hover:bg-[#f8faff]"
+      >
+        {row.getVisibleCells().map((cell) => {
+          const value = cell.getValue() as string
+
+          const isStatus =
+            typeof value === "string" &&
+            [
+              "active",
+              "inactive",
+              "pending",
+              "rejected",
+              "approved",
+             
+            ].includes(value.toLowerCase())
+
+          const getStatusStyles = (status: string) => {
+            switch (status.toLowerCase()) {
+              case "active":
+                return {
+                  border: "1px solid #22c55e",
+                  background: "#f0fdf4",
+                  color: "#15803d",
+                }
+
+              case "inactive":
+                return {
+                  border: "1px solid #a1a1aa",
+                  background: "#fafafa",
+                  color: "#52525b",
+                }
+
+              case "pending":
+                return {
+                  border: "1px solid #f59e0b",
+                  background: "#fffbeb",
+                  color: "#b45309",
+                }
+
+              case "rejected":
+                return {
+                  border: "1px solid #ef4444",
+                  background: "#fef2f2",
+                  color: "#dc2626",
+                }
+
+              case "approved":
+                return {
+                  border: "1px solid #3b82f6",
+                  background: "#eff6ff",
+                  color: "#2563eb",
+                }
+
+             
+
+              default:
+                return {}
+            }
+          }
+
+          return (
+            <TableCell
+              key={cell.id}
+              className="py-4 text-sm whitespace-nowrap"
+              style={{
+                color: colors.h1,
+              }}
+            >
+              {isStatus ? (
+                <span
                   style={{
-                    color:
-                      colors.formParagraphColor,
+                    ...getStatusStyles(value),
+                    padding: "6px 12px",
+                    borderRadius: "999px",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: "90px",
+                    textTransform: "capitalize",
                   }}
                 >
-                  No results found.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+                  {value}
+                </span>
+              ) : (
+                flexRender(
+                  cell.column.columnDef.cell,
+                  cell.getContext()
+                )
+              )}
+            </TableCell>
+          )
+        })}
+      </TableRow>
+    ))
+  ) : (
+    <TableRow>
+      <TableCell
+        colSpan={columns.length}
+        className="h-32 text-center text-base"
+        style={{
+          color: colors.formParagraphColor,
+        }}
+      >
+        No results found.
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
         </Table>
       </div>
 

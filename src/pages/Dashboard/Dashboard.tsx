@@ -7,59 +7,39 @@ import Users from "../users/Users";
 import { TypographyH1 } from "../../../@/components/ui/typography";
 import { StatsCard } from "../../../@/components/ui/statsCard";
 import { ChartPieDonutTextt } from "../../charts/PieCharts";
-import { ChartBarLabelCustom } from "../../charts/ChartBarLabelCustom"; 
-import {ChartBarHorizontal} from "../../charts/ChartBarHorizantal"
- import MappingChartsGrid from "../../charts/ChartPieDonutText";
+import { ChartBarLabelCustom } from "../../charts/ChartBarLabelCustom";
+import { ChartBarHorizontal } from "../../charts/ChartBarHorizantal";
+import MappingChartsGrid from "../../charts/ChartPieDonutText";
 import ProfileSettings from "../Profile/ProfilePage";
 
-
-
-
-
-// stats card hard coded data 
+// stats card hard coded data
 const cardsData = [
- 
   {
-   
     leaderNumber: 2817,
     leaderHeading: "Total Users",
     followerNumber: 32,
-   
-    
-   
-    
   },
   {
-   
     leaderNumber: 1450,
     leaderHeading: "Active Clients",
     followerNumber: 18,
-  
   },
   {
-    
     leaderNumber: 982,
     leaderHeading: "Completed Orders",
     followerNumber: 12,
-   
   },
-   {
-   
+  {
     leaderNumber: 2817,
     leaderHeading: "Total Users",
     followerNumber: 32,
-  
-    
   },
-   {
-   
+  {
     leaderNumber: 2817,
     leaderHeading: "Total Users",
     followerNumber: 32,
-  
-    
   },
-]; 
+];
 // sample-data/profile-data.ts
 
 export const profileData = {
@@ -146,12 +126,9 @@ export const profileData = {
       value: "eat",
     },
   ],
-
- 
-}
+};
 export default function Dashboard() {
   const activePage = activePageStore((state) => state.activePage);
-
 
   const [isExpanded, setIsExpanded] = useState(false);
   return (
@@ -173,28 +150,25 @@ export default function Dashboard() {
           {activePage === "dashboard" ? (
             <div>
               <TypographyH1>Dashboard</TypographyH1>
-              <StatsCard cardsData={cardsData}/> 
-              <div className="grid mx-4 mt-6  gap-3 grid-cols-1 md:grid-cols-3">
-               {/* this is the charts section  */}
-               
-              
-                  <ChartPieDonutTextt/> 
-                <ChartBarLabelCustom/> 
-                <ChartBarHorizontal/>
-                 
-              
-               
-               
+              <div className="mx-4">
+                {" "}
+                <StatsCard cardsData={cardsData} />{" "}
               </div>
-              {/* four charts */} 
-               <MappingChartsGrid/>
-              
+              <div className="grid mx-4 mt-6  gap-3 grid-cols-1 md:grid-cols-3">
+                {/* this is the charts section  */}
+
+                <ChartPieDonutTextt />
+                <ChartBarLabelCustom />
+                <ChartBarHorizontal />
+              </div>
+              {/* four charts */}
+              <MappingChartsGrid />
             </div>
           ) : activePage === "appoitments" ? (
             <Appointment />
-          ) :  activePage === "profile" ? (
-             <ProfileSettings {...profileData} />
-          ) :(
+          ) : activePage === "profile" ? (
+            <ProfileSettings {...profileData} />
+          ) : (
             <Users />
           )}
         </div>

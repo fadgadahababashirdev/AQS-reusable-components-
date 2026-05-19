@@ -276,7 +276,8 @@ export default function ProfileSettings({
         background: "var(--color-background-primary, #fff)",
     
         borderRadius: 16,
-        padding: "2rem",
+        paddingTop: "2rem",
+         paddingBottom: "2rem",
         fontFamily: "inherit",
       }}
     >
@@ -413,106 +414,191 @@ export default function ProfileSettings({
 
       <hr style={dividerStyle} />
 
-      {/* ── EMAIL SECTION ── */}
-      <div>
-        <p
+     {/* ── EMAIL SECTION ── */}
+<div>
+  <p
+    style={{
+      fontSize: 16,
+      fontWeight: 500,
+      color: "var(--color-text-primary, #111)",
+      marginBottom: "1rem",
+    }}
+  >
+    My email address
+  </p>
+
+  <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+    {emailAddresses.map((item, i) => (
+      <div
+        key={i}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "1rem",
+          padding: "14px 16px",
+          border: "1px solid var(--color-border-secondary, #e5e5e5)",
+          borderRadius: 14,
+          background: "var(--color-background-primary, #fff)",
+          flexWrap: "wrap",
+        }}
+      >
+        {/* LEFT SIDE */}
+        <div
           style={{
-            fontSize: 16,
-            fontWeight: 500,
-            color: "var(--color-text-primary, #111)",
-            marginBottom: "1rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.875rem",
           }}
         >
-          My email address
-        </p>
+          {/* Icon bubble */}
+          <div
+            style={{
+              width: 42,
+              height: 42,
+              borderRadius: "50%",
+              background: item.primary
+                ? "var(--color-background-info, #e6f1fb)"
+                : "var(--color-background-secondary, #f5f5f5)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <MailIcon color={item.primary ? "#185fa5" : "#888"} />
+          </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-          {emailAddresses.map((item, i) => (
-            <div
-              key={i}
-              style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}
+          <div>
+            <p
+              style={{
+                fontSize: 14,
+                fontWeight: 500,
+                color: "var(--color-text-primary, #111)",
+                margin: 0,
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                flexWrap: "wrap",
+              }}
             >
-              {/* Icon bubble */}
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  background: item.primary
-                    ? "var(--color-background-info, #e6f1fb)"
-                    : "var(--color-background-secondary, #f5f5f5)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <MailIcon color={item.primary ? "#185fa5" : "#888"} />
-              </div>
+              {item.email}
 
-              <div>
-                <p
+              {item.primary && (
+                <span
                   style={{
-                    fontSize: 14,
+                    fontSize: 11,
                     fontWeight: 500,
-                    color: "var(--color-text-primary, #111)",
-                    margin: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
+                    padding: "3px 9px",
+                    borderRadius: 99,
+                    background: "var(--color-background-success, #eaf3de)",
+                    color: "var(--color-text-success, #3b6d11)",
                   }}
                 >
-                  {item.email}
-                  {item.primary && (
-                    <span
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 500,
-                        padding: "2px 8px",
-                        borderRadius: 99,
-                        background: "var(--color-background-success, #eaf3de)",
-                        color: "var(--color-text-success, #3b6d11)",
-                      }}
-                    >
-                      Primary
-                    </span>
-                  )}
-                </p>
-                <p
-                  style={{
-                    fontSize: 12,
-                    color: "var(--color-text-secondary, #888)",
-                    marginTop: 2,
-                  }}
-                >
-                  {item.addedAt}
-                </p>
-              </div>
-            </div>
-          ))}
+                  Primary
+                </span>
+              )}
+            </p>
+
+            <p
+              style={{
+                fontSize: 12,
+                color: "var(--color-text-secondary, #888)",
+                marginTop: 4,
+                marginBottom: 0,
+              }}
+            >
+              {item.addedAt}
+            </p>
+          </div>
         </div>
 
-        <button
-          onClick={onAddEmail}
+        {/* ACTION BUTTONS */}
+        <div
           style={{
-            marginTop: "1.25rem",
-            background: "var(--color-background-secondary, #f5f5f5)",
-            border: "0.5px solid var(--color-border-secondary, #ccc)",
-            borderRadius: 8,
-            padding: "8px 18px",
-            fontSize: 13,
-            fontWeight: 500,
-            color: "var(--color-text-primary, #111)",
-            cursor: "pointer",
-            display: "inline-flex",
+            display: "flex",
             alignItems: "center",
-            gap: 6,
+            gap: "0.6rem",
+            flexWrap: "wrap",
           }}
         >
-          <span style={{ fontSize: 16, lineHeight: 1 }}>+</span>
-          Add email address
-        </button>
+          {/* Activate */}
+          <button
+            style={{
+              border: "none",
+              background: "#185fa5",
+              color: "#fff",
+              padding: "8px 14px",
+              borderRadius: 8,
+              fontSize: 12,
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "0.2s",
+            }}
+          >
+            Activate
+          </button>
+
+          {/* Reactivate */}
+          <button
+            style={{
+              border: "1px solid #185fa5",
+              background: "#fff",
+              color: "#185fa5",
+              padding: "8px 14px",
+              borderRadius: 8,
+              fontSize: 12,
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "0.2s",
+            }}
+          >
+            Reactivate
+          </button>
+
+          {/* Reset Link */}
+          <button
+            style={{
+              border: "1px solid var(--color-border-secondary, #ddd)",
+              background: "var(--color-background-secondary, #f7f7f7)",
+              color: "var(--color-text-primary, #111)",
+              padding: "8px 14px",
+              borderRadius: 8,
+              fontSize: 12,
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "0.2s",
+            }}
+          >
+            Send reset link
+          </button>
+        </div>
       </div>
+    ))}
+  </div>
+
+  {/* ADD EMAIL BUTTON */}
+  <button
+    onClick={onAddEmail}
+    style={{
+      marginTop: "1.25rem",
+      background: "var(--color-background-secondary, #f5f5f5)",
+      border: "0.5px solid var(--color-border-secondary, #ccc)",
+      borderRadius: 10,
+      padding: "10px 18px",
+      fontSize: 13,
+      fontWeight: 500,
+      color: "var(--color-text-primary, #111)",
+      cursor: "pointer",
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 6,
+    }}
+  >
+    <span style={{ fontSize: 16, lineHeight: 1 }}>+</span>
+    Add email address
+  </button>
+</div>
     </div>
   );
 }

@@ -64,7 +64,7 @@ const colors = useSideBarColors()
   return (
     <Button
       onClick={exportToCSV}
-      className={` text-white ${className}`}
+      className={`cursor-pointer  text-white ${className}`}
       style={{backgroundColor:colors.overlayColor}}
     >
       {buttonText}
